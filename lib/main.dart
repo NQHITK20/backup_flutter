@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/model/profile.dart';
+import 'package:flutter_application_3/providers/forgotviewmodal.dart';
 import 'package:flutter_application_3/providers/loginviewmodal.dart';
 import 'package:flutter_application_3/providers/registerviewmodal.dart';
 import 'package:flutter_application_3/service/api_service.dart';
+import 'package:flutter_application_3/ui/page_forgot.dart';
 import 'package:flutter_application_3/ui/page_login.dart';
 import 'package:flutter_application_3/ui/page_main.dart';
 import 'package:flutter_application_3/ui/page_register.dart';
@@ -20,7 +22,9 @@ void main() {
       ChangeNotifierProvider<LoginViewModal>(
           create: (context) => LoginViewModal()),
       ChangeNotifierProvider<RegisterViewModel>(
-          create: (context) => RegisterViewModel())
+          create: (context) => RegisterViewModel()),
+      ChangeNotifierProvider<ForgotViewModal>(
+          create: (context) => ForgotViewModal())
     ],
     child: const MyApp(),
   ));
@@ -38,24 +42,11 @@ class MyApp extends StatelessWidget {
         '/home': (context) => Pagemain(),
         '/login': (context) => PageLogin(),
         '/register': (context) => PageRegister(),
+        '/forgot': (context) => PageForgot(),
       },
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
+        textTheme: TextTheme(bodyMedium: TextStyle(fontSize: 16)),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),

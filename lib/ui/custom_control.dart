@@ -35,21 +35,18 @@ class padding1 extends StatelessWidget {
   final bool obscureText;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        decoration: BoxDecoration(
-          color: Colors.grey[200],
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: Colors.white),
-        ),
-        child: TextField(
-          obscureText: obscureText,
-          controller: _textController,
-          decoration:
-              InputDecoration(border: InputBorder.none, hintText: hintText),
-        ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.white),
+      ),
+      child: TextField(
+        obscureText: obscureText,
+        controller: _textController,
+        decoration:
+            InputDecoration(border: InputBorder.none, hintText: hintText),
       ),
     );
   }

@@ -43,7 +43,7 @@ class PageRegister extends StatelessWidget {
       body: SafeArea(
           child: Center(
         child: SingleChildScrollView(
-          child: viewmodel.status == 0 || viewmodel.status == 4
+          child: viewmodel.status == 3 || viewmodel.status == 4
               ? Column(
                   children: [
                     Image(
@@ -75,82 +75,83 @@ class PageRegister extends StatelessWidget {
                 )
               : Stack(
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Applogo(),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Text(
-                          'Add more name',
-                          style: AppConstant.fancyheader,
-                        ),
-                        Text('Add more name 2', style: AppConstant.fancyheader),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        padding1(
-                            textController: _usernameController,
-                            hintText: 'Username',
-                            obscureText: false),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        padding1(
-                            textController: _emailController,
-                            hintText: 'Email',
-                            obscureText: false),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        padding1(
-                            textController: _password1Controller,
-                            hintText: 'Password1',
-                            obscureText: false),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        padding1(
-                            textController: _password2Controller,
-                            hintText: 'Password2',
-                            obscureText: false),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Checkbox(
-                                value: viewmodel.agree,
-                                onChanged: (value) {
-                                  viewmodel.setAgree(value!);
-                                }),
-                            Text('Đồng ý  '),
-                            GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                          title: Text('Quy định'),
-                                          content: SingleChildScrollView(
-                                              child: Text(viewmodel.quydinh)),
-                                        ));
-                              },
-                              child: Text(
-                                'Quy định',
-                                style: AppConstant.link,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Applogo(),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            'Add more name',
+                            style: AppConstant.fancyheader2,
+                          ),
+                          Text('Add more name 2',
+                              style: AppConstant.fancyheader2),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          padding1(
+                              textController: _usernameController,
+                              hintText: 'Username',
+                              obscureText: false),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          padding1(
+                              textController: _emailController,
+                              hintText: 'Email',
+                              obscureText: false),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          padding1(
+                              textController: _password1Controller,
+                              hintText: 'Password1',
+                              obscureText: false),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          padding1(
+                              textController: _password2Controller,
+                              hintText: 'Password2',
+                              obscureText: false),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Checkbox(
+                                  value: viewmodel.agree,
+                                  onChanged: (value) {
+                                    viewmodel.setAgree(value!);
+                                  }),
+                              Text('Đồng ý  '),
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                            title: Text('Quy định'),
+                                            content: SingleChildScrollView(
+                                                child: Text(viewmodel.quydinh)),
+                                          ));
+                                },
+                                child: Text(
+                                  'Quy định',
+                                  style: AppConstant.link,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          viewmodel.errormessage,
-                          style: AppConstant.texterror,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                          child: GestureDetector(
+                            ],
+                          ),
+                          Text(
+                            viewmodel.errormessage,
+                            style: AppConstant.texterror,
+                          ),
+                          GestureDetector(
                               onTap: () {
                                 final email = _emailController.text.trim();
                                 final username =
@@ -163,8 +164,15 @@ class PageRegister extends StatelessWidget {
                                     email, username, password1, password2);
                               },
                               child: const contain1(TextButton: 'Đăng ký')),
-                        ),
-                      ],
+                          GestureDetector(
+                              onTap: () => Navigator.of(context)
+                                  .popAndPushNamed(PageLogin.routename),
+                              child: Text(
+                                'Đăng nhập >>',
+                                style: AppConstant.link,
+                              ))
+                        ],
+                      ),
                     ),
                     viewmodel.status == 1
                         ? CustomSpinner(

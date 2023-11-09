@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 
 class ApiService {
@@ -11,6 +10,7 @@ class ApiService {
 
   final url_login = 'https://chocaycanh.club/public/api/login';
   final url_register = 'https://chocaycanh.club/public/api/register';
+  final url_forgot = 'https://chocaycanh.club/public/api/password/remind';
   late Dio _dio;
   void initialize() {
     _dio = Dio(BaseOptions(responseType: ResponseType.json));
@@ -61,5 +61,24 @@ class ApiService {
         print(e.response);
       }
     }
+  }
+
+  Future<Response?> ForgotPass(String email) async {
+    Map<dynamic, dynamic> param = {
+      'email': email,
+    };
+    Map<String, String> headers = {
+      'Content-Type': 'application/json;charset=UTF-8',
+    };
+    try {
+      final response = await _dio.post(url_forgot,
+          data: jsonEncode(param), options: Options(headers: headers));
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      print(e);
+    }
+    return null;
   }
 }
