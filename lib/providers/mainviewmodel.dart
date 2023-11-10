@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 class MainViewModel with ChangeNotifier {
+  static final MainViewModel _instance = MainViewModel._internal();
+  MainViewModel._internal();
+  factory MainViewModel() {
+    return _instance;
+  }
+
   int menustatus = 0; //o close,1 open
   int activemenu = 0; //index cua menu
   void toggleMenu() {
@@ -13,6 +19,7 @@ class MainViewModel with ChangeNotifier {
   }
 
   void closeMenu() {
+    menustatus = 0;
     menustatus = 0;
     notifyListeners();
   }
