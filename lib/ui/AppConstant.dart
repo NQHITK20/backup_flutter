@@ -9,4 +9,6 @@ class AppConstant {
   static TextStyle texterror = TextStyle(
       color: Colors.red[300], fontSize: 16, fontStyle: FontStyle.italic);
   static TextStyle link = TextStyle(color: Colors.purple[300], fontSize: 16);
+  // static  appbarcolor =
+  //     GoogleFonts.flavors(fontSize: 40, color: Colors.deepPurple[300]);
 }

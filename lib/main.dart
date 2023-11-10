@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_3/model/profile.dart';
 import 'package:flutter_application_3/providers/forgotviewmodal.dart';
 import 'package:flutter_application_3/providers/loginviewmodal.dart';
+import 'package:flutter_application_3/providers/mainviewmodel.dart';
+import 'package:flutter_application_3/providers/menubarviewmodal.dart';
 import 'package:flutter_application_3/providers/registerviewmodal.dart';
 import 'package:flutter_application_3/service/api_service.dart';
 import 'package:flutter_application_3/ui/page_forgot.dart';
@@ -24,7 +26,11 @@ void main() {
       ChangeNotifierProvider<RegisterViewModel>(
           create: (context) => RegisterViewModel()),
       ChangeNotifierProvider<ForgotViewModal>(
-          create: (context) => ForgotViewModal())
+          create: (context) => ForgotViewModal()),
+      ChangeNotifierProvider<MainViewModel>(
+          create: (context) => MainViewModel()),
+      ChangeNotifierProvider<MenuBarViewModel>(
+          create: (context) => MenuBarViewModel())
     ],
     child: const MyApp(),
   ));
@@ -50,7 +56,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: PageRegister(),
+      home: Pagemain(),
     );
   }
 }
