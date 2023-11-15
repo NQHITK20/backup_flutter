@@ -1,8 +1,10 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/model/profile.dart';
 import 'package:flutter_application_3/providers/mainviewmodel.dart';
 import 'package:flutter_application_3/providers/menubarviewmodal.dart';
 import 'package:flutter_application_3/ui/AppConstant.dart';
+import 'package:flutter_application_3/ui/page_login.dart';
 import 'package:flutter_application_3/ui/subpage_diemdanh.dart';
 import 'package:flutter_application_3/ui/subpage_dshocphan.dart';
 import 'package:flutter_application_3/ui/subpage_dslop.dart';
@@ -27,6 +29,10 @@ class Pagemain extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final viewmodal = Provider.of<MainViewModel>(context);
+    Profile profile = Profile();
+    if (profile.token == '') {
+      return PageLogin();
+    }
     Widget body = SubPageTinTuc();
     if (viewmodal.activemenu == SubPageProfile.idpage) {
       body = SubPageProfile();

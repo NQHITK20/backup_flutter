@@ -22,12 +22,7 @@ class PageLogin extends StatelessWidget {
       Future.delayed(
         Duration.zero,
         () {
-          Navigator.pop(context);
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Pagemain(),
-              ));
+          Navigator.popAndPushNamed(context, Pagemain.routename);
         },
       );
     }

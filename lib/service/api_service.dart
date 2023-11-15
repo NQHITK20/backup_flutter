@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter_application_3/model/profile.dart';
 
 class ApiService {
   static final ApiService _instance = ApiService._internal();
@@ -14,6 +15,25 @@ class ApiService {
   late Dio _dio;
   void initialize() {
     _dio = Dio(BaseOptions(responseType: ResponseType.json));
+  }
+
+  Future<Response?> getStInfo() async {
+    Map<String, String> headers = {
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Authorization': 'Bearer' + Profile().token,
+      'Accept': 'application/json',
+    };
+    String apiUrl = 'https://chocaycanh.club/api/sinhvien/info';
+    try {
+      final response =
+          await _dio.get(apiUrl, options: Options(headers: headers));
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      print(e);
+    }
+    return null;
   }
 
   Future<Response?> loginUser(String username, String password) async {
