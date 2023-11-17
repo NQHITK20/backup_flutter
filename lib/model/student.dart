@@ -14,6 +14,21 @@ class Student {
       this.duyet = 0});
 
   factory Student.fromJson(Map<String, dynamic> json) {
-    return Student(iduser: json['iduser']);
+    return Student(
+        iduser: json['iduser'],
+        mssv: json['mssv'],
+        idlop: json['idlop'],
+        tenlop: json['tenlop'],
+        diem: json['diem'],
+        duyet: json['duyet']);
+  }
+  factory Student.fromStudent(Student student) {
+    return Student(
+        iduser: student.iduser,
+        mssv: student.mssv,
+        idlop: student.idlop,
+        tenlop: student.tenlop,
+        diem: student.diem,
+        duyet: student.duyet);
   }
 }

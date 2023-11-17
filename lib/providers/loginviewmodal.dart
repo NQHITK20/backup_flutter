@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/model/student.dart';
+import 'package:flutter_application_3/model/user.dart';
 import 'package:flutter_application_3/repositories/login_repository.dart';
+import 'package:flutter_application_3/repositories/student_repository.dart';
+import 'package:flutter_application_3/repositories/user_repository.dart';
 
 class LoginViewModal with ChangeNotifier {
   String errorMessage = '';
@@ -14,8 +18,12 @@ class LoginViewModal with ChangeNotifier {
         status = 2;
         errorMessage = 'tài khoản hoặc mật khẩu sai cmnr';
       } else {
+        //đăng nhập ngon r,lấy user stu
+        var student = await StudentRepository().getStudentInfo();
+        profile.student = Student.fromStudent(student);
+        var user = await UserRepository().getUserInfo();
+        profile.user = User.fromUser(user);
         status = 3;
-        errorMessage = 'lỗi r';
       }
       notifyListeners();
     } catch (e) {

@@ -4,6 +4,7 @@ import 'package:flutter_application_3/model/profile.dart';
 import 'package:flutter_application_3/providers/mainviewmodel.dart';
 import 'package:flutter_application_3/providers/menubarviewmodal.dart';
 import 'package:flutter_application_3/ui/AppConstant.dart';
+import 'package:flutter_application_3/ui/page_dklop.dart';
 import 'package:flutter_application_3/ui/page_login.dart';
 import 'package:flutter_application_3/ui/subpage_diemdanh.dart';
 import 'package:flutter_application_3/ui/subpage_dshocphan.dart';
@@ -32,6 +33,9 @@ class Pagemain extends StatelessWidget {
     Profile profile = Profile();
     if (profile.token == '') {
       return PageLogin();
+    }
+    if (profile.student.mssv == '') {
+      return PageDangkyLop();
     }
     Widget body = SubPageTinTuc();
     if (viewmodal.activemenu == SubPageProfile.idpage) {

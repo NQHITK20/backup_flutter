@@ -1,5 +1,7 @@
 import 'dart:js_util';
 
+import 'package:flutter_application_3/model/student.dart';
+import 'package:flutter_application_3/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile {
@@ -10,7 +12,8 @@ class Profile {
   }
   late SharedPreferences _pref;
   late String token;
-
+  Student student = Student();
+  User user = User();
   Future<void> initialize() async {
     _pref = await SharedPreferences.getInstance();
     token = '';
