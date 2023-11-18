@@ -59,7 +59,7 @@ class Applogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(Icons.account_tree, size: 100, color: Colors.deepPurple[300]);
+    return Icon(Icons.audiotrack, size: 100, color: Colors.deepPurple[300]);
   }
 }
 
