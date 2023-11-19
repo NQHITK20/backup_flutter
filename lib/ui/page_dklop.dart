@@ -8,7 +8,12 @@ class PageDangkyLop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     Profile profile = Profile();
+    String mssv = profile.student.mssv;
+    String ten = profile.user.first_name;
+    int idlop = profile.student.idlop;
+    String tenlop = profile.student.tenlop;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -29,19 +34,114 @@ class PageDangkyLop extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Tên:'),
-                Text(profile.user.first_name + 'Ten Ten Ten'),
-                Divider(
-                  thickness: 1,
-                )
-              ],
+            CustomInputTextFormField(
+              width: size.width,
+              title: 'Tên',
+              value: ten,
+              callback: (output) {
+                ten = output;
+              },
             ),
+            CustomInputTextFormField(
+              width: size.width,
+              title: 'Mssv',
+              value: mssv,
+              callback: (output) {
+                mssv = output;
+              },
+            )
           ],
         )),
       ),
+    );
+  }
+}
+
+class CustomInputTextFormField extends StatefulWidget {
+  CustomInputTextFormField({
+    super.key,
+    required this.width,
+    required this.title,
+    required this.value,
+    required this.callback,
+  });
+
+  final double width;
+  final String title;
+  final String value;
+  final Function(String output) callback;
+
+  @override
+  State<CustomInputTextFormField> createState() =>
+      _CustomInputTextFormFieldState();
+}
+
+class _CustomInputTextFormFieldState extends State<CustomInputTextFormField> {
+  int status = 0;
+  String output = '';
+  @override
+  void initState() {
+    // TODO: implement initState
+    output = widget.value;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.title,
+          style: AppConstant.textBody,
+        ),
+        status == 0
+            ? GestureDetector(
+                onTap: () {
+                  setState(() {
+                    status = 1;
+                  });
+                },
+                child: Text(
+                  output == '' ? 'Không có' : output,
+                  style: AppConstant.textBodyfocus,
+                ),
+              )
+            : Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.grey[200]),
+                    width: widget.width - 25,
+                    child: TextFormField(
+                      decoration: InputDecoration(border: InputBorder.none),
+                      initialValue: output,
+                      onChanged: (value) {
+                        setState(() {
+                          output = value;
+                        });
+                      },
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        status = 0;
+                        widget.callback(output);
+                      });
+                    },
+                    child: Icon(
+                      Icons.save,
+                      size: 18,
+                    ),
+                  )
+                ],
+              ),
+        Divider(
+          thickness: 1,
+        )
+      ],
     );
   }
 }

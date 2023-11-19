@@ -10,7 +10,7 @@ class AppConstant {
   static TextStyle textBody =
       GoogleFonts.flavors(fontSize: 16, color: Colors.deepPurple[300]);
   static TextStyle textBodyfocus =
-      GoogleFonts.flavors(fontSize: 20, color: Colors.deepPurple[300]);
+      GoogleFonts.lato(fontSize: 20, color: Colors.deepPurple[300]);
   static TextStyle texterror = TextStyle(
       color: Colors.red[300], fontSize: 16, fontStyle: FontStyle.italic);
   static TextStyle link = TextStyle(color: Colors.purple[300], fontSize: 16);

@@ -34,7 +34,7 @@ class Pagemain extends StatelessWidget {
     if (profile.token == '') {
       return PageLogin();
     }
-    if (profile.student.mssv != '') {
+    if (profile.student.mssv == '') {
       return PageDangkyLop();
     }
     Widget body = SubPageTinTuc();
