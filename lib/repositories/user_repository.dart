@@ -11,4 +11,13 @@ class UserRepository {
     }
     return user;
   }
+
+  Future<bool> updateProfile() async {
+    bool kq = false;
+    var res = await ApiService().updateProfile();
+    if (res != null) {
+      kq = true;
+    }
+    return kq;
+  }
 }
