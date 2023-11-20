@@ -31,9 +31,9 @@ class Pagemain extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final viewmodal = Provider.of<MainViewModel>(context);
     Profile profile = Profile();
-    if (profile.token == '') {
-      return PageLogin();
-    }
+    // if (profile.token == '') {
+    //   return PageLogin();
+    // }
     if (profile.student.mssv == '') {
       return PageDangkyLop();
     }

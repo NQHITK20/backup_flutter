@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/repositories/lop_repository.dart';
 import 'package:flutter_application_3/ui/AppConstant.dart';
 
+import '../model/lop.dart';
 import '../model/profile.dart';
 
 class PageDangkyLop extends StatelessWidget {
@@ -14,43 +16,62 @@ class PageDangkyLop extends StatelessWidget {
     String ten = profile.user.first_name;
     int idlop = profile.student.idlop;
     String tenlop = profile.student.tenlop;
+    List<Lop>? listlop = [];
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Thêm thông tin cơ bản',
-              style: AppConstant.fancyheader2,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              'Check kĩ giùm nha',
-              style: AppConstant.texterror,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            CustomInputTextFormField(
-              width: size.width,
-              title: 'Tên',
-              value: ten,
-              callback: (output) {
-                ten = output;
-              },
-            ),
-            CustomInputTextFormField(
-              width: size.width,
-              title: 'Mssv',
-              value: mssv,
-              callback: (output) {
-                mssv = output;
-              },
-            )
-          ],
+            child: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Thêm thông tin cơ bản',
+                style: AppConstant.fancyheader2,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Check kĩ giùm nha',
+                style: AppConstant.texterror,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              CustomInputTextFormField(
+                width: size.width,
+                title: 'Tên',
+                value: ten,
+                callback: (output) {
+                  ten = output;
+                },
+              ),
+              CustomInputTextFormField(
+                width: size.width,
+                title: 'Mssv',
+                value: mssv,
+                callback: (output) {
+                  mssv = output;
+                },
+              ),
+              listlop.isEmpty
+                  ? FutureBuilder(
+                      future: LopRepository().getDsLop(),
+                      builder: (context, AsyncSnapshot<List<Lop>> snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (snapshot.hasData) {
+                          listlop = snapshot.data;
+                          return Text('lop:' + listlop!.length.toString());
+                        } else {
+                          return Text('bug cmnr');
+                        }
+                      })
+                  : Text('lop:' + listlop!.length.toString()),
+            ],
+          ),
         )),
       ),
     );
