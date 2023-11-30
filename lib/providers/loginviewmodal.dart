@@ -18,7 +18,7 @@ class LoginViewModal with ChangeNotifier {
         status = 2;
         errorMessage = 'tài khoản hoặc mật khẩu sai cmnr';
       } else {
-        //đăng nhập ngon r,lấy user stu
+   //đăng nhập ngon r,lấy user zzz
         var student = await StudentRepository().getStudentInfo();
         profile.student = Student.fromStudent(student);
         var user = await UserRepository().getUserInfo();

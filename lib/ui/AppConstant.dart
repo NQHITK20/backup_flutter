@@ -9,8 +9,14 @@ class AppConstant {
       GoogleFonts.flavors(fontSize: 30, color: Colors.deepPurple[300]);
   static TextStyle textBody =
       GoogleFonts.flavors(fontSize: 16, color: Colors.deepPurple[300]);
+  static TextStyle textBodywhite =
+      GoogleFonts.flavors(fontSize: 16, color: Colors.white);
   static TextStyle textBodyfocus =
       GoogleFonts.lato(fontSize: 20, color: Colors.deepPurple[300]);
+  static TextStyle textBodyfocuswhite =
+      GoogleFonts.lato(fontSize: 20, color: Colors.white);
+  static TextStyle textBodyfocuswhitebold = GoogleFonts.lato(
+      fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white);
   static TextStyle texterror = TextStyle(
       color: Colors.red[300], fontSize: 16, fontStyle: FontStyle.italic);
   static TextStyle link = TextStyle(color: Colors.purple[300], fontSize: 16);

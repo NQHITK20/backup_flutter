@@ -86,3 +86,26 @@ class CustomSpinner extends StatelessWidget {
     );
   }
 }
+
+class CustomAvatar1 extends StatelessWidget {
+  const CustomAvatar1({
+    super.key,
+    required this.size,
+  });
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(size.height * 0.25),
+      child: Container(
+          width: 100,
+          height: 100,
+          child: Image.asset(
+            'cute1.gif',
+            fit: BoxFit.cover,
+          )),
+    );
+  }
+}
