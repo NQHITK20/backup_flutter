@@ -4,6 +4,7 @@ import 'package:flutter_application_3/providers/forgotviewmodal.dart';
 import 'package:flutter_application_3/providers/loginviewmodal.dart';
 import 'package:flutter_application_3/providers/mainviewmodel.dart';
 import 'package:flutter_application_3/providers/menubarviewmodal.dart';
+import 'package:flutter_application_3/providers/profileviewmodal.dart';
 import 'package:flutter_application_3/providers/registerviewmodal.dart';
 import 'package:flutter_application_3/service/api_service.dart';
 import 'package:flutter_application_3/ui/page_forgot.dart';
@@ -30,7 +31,9 @@ void main() {
       ChangeNotifierProvider<MainViewModel>(
           create: (context) => MainViewModel()),
       ChangeNotifierProvider<MenuBarViewModel>(
-          create: (context) => MenuBarViewModel())
+          create: (context) => MenuBarViewModel()),
+      ChangeNotifierProvider<ProfileViewModel>(
+          create: (context) => ProfileViewModel())
     ],
     child: const MyApp(),
   ));

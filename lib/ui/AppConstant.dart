@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class AppConstant {
   static Color backgroundcolor = const Color.fromARGB(255, 128, 234, 255);
@@ -20,6 +21,13 @@ class AppConstant {
   static TextStyle texterror = TextStyle(
       color: Colors.red[300], fontSize: 16, fontStyle: FontStyle.italic);
   static TextStyle link = TextStyle(color: Colors.purple[300], fontSize: 16);
-  // static  appbarcolor =
-  //     GoogleFonts.flavors(fontSize: 40, color: Colors.deepPurple[300]);
+  static bool isDate(String str) {
+    try {
+      var inputFormat = DateFormat('dd/mm/yyyy');
+      var date1 = inputFormat.parseStrict(str);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

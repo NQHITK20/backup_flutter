@@ -41,15 +41,15 @@ class Pagemain extends StatelessWidget {
     if (viewmodal.activemenu == SubPageProfile.idpage) {
       body = SubPageProfile();
     } else if (viewmodal.activemenu == SubPageTinTuc.idpage) {
-      body = SubPageTinTuc();
+      body = SubPageProfile();
     } else if (viewmodal.activemenu == SubPageTimKiem.idpage) {
-      body = SubPageTimKiem();
+      body = SubPageProfile();
     } else if (viewmodal.activemenu == SubPageDslop.idpage) {
-      body = SubPageDslop();
+      body = SubPageProfile();
     } else if (viewmodal.activemenu == SubPageDshocphan.idpage) {
-      body = SubPageDshocphan();
+      body = SubPageProfile();
     } else if (viewmodal.activemenu == SubPageDiemdanh.idpage) {
-      body = SubPageDiemdanh();
+      body = SubPageProfile();
     }
     menuBar.initialize(menuTitles);
     return Scaffold(
