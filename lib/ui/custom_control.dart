@@ -279,14 +279,14 @@ class _CustomInputDropDownState extends State<CustomInputDropDown> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     color: Colors.grey[200]),
-                width: widget.width - 25,
+                width: widget.width,
                 child: DropdownButton(
                   value: outputId,
                   items: widget.list
                       .map((e) => DropdownMenuItem(
                             value: e.id,
                             child: Container(
-                                width: widget.width * 0.8,
+                                width: widget.width * 0.6,
                                 child: Text(
                                   e.ten,
                                   overflow: TextOverflow.ellipsis,

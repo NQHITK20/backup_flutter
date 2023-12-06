@@ -1,26 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/model/profile.dart';
+import 'package:flutter_application_3/providers/diachiviewmodal.dart';
 import 'package:flutter_application_3/providers/mainviewmodel.dart';
 import 'package:flutter_application_3/providers/profileviewmodal.dart';
 import 'package:provider/provider.dart';
-
 import 'AppConstant.dart';
 import 'custom_control.dart';
 
-class SubPageProfile extends StatefulWidget {
+class SubPageProfile extends StatelessWidget {
   const SubPageProfile({super.key});
   static int idpage = 1;
 
-  @override
-  State<SubPageProfile> createState() => _SubPageProfileState();
-}
+  Future<void> init(Diachiviewmodal dcmodel, ProfileViewModel viewModel) async {
+    Profile profile = Profile();
+    if (dcmodel.listCity.isEmpty ||
+        dcmodel.curCityId != profile.user.province_id ||
+        dcmodel.curCityId != profile.user.district_id ||
+        dcmodel.curWardId != profile.user.ward_id) {
+      viewModel.playspiner();
+      await dcmodel.initialize(profile.user.province_id,
+          profile.user.district_id, profile.user.ward_id);
+      viewModel.hidespiner();
+    }
+  }
 
-class _SubPageProfileState extends State<SubPageProfile> {
   @override
   Widget build(BuildContext context) {
     final viewmodel = Provider.of<ProfileViewModel>(context);
+    final dcmodel = Provider.of<Diachiviewmodal>(context);
     final size = MediaQuery.of(context).size;
     final profile = Profile();
+    Future.delayed(Duration.zero, () => init(dcmodel, viewmodel));
     return GestureDetector(
       onTap: () => MainViewModel().closeMenu(),
       child: Container(
@@ -60,6 +70,24 @@ class _SubPageProfileState extends State<SubPageProfile> {
                     ),
                   ],
                 ),
+                Row(
+                  children: [
+                    CustomPlaceDropDown(
+                        width: size.width * 0.45,
+                        title: 'Thành phố/tỉnh',
+                        valueId: profile.user.province_id,
+                        valueName: profile.user.provincename,
+                        callback: (outputId, outputName) async {
+                          viewmodel.playspiner();
+                          profile.user.province_id = outputId;
+                          profile.user.provincename = outputName;
+                          await dcmodel.SetCity(outputId);
+                          viewmodel.hidespiner();
+                        },
+                        list: dcmodel.listCity,
+                        valueoutputBirthday: '')
+                  ],
+                )
               ],
             ),
             viewmodel.status == 1 ? CustomSpinner(size: size) : Container(),

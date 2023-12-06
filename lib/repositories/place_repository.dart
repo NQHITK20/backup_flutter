@@ -5,6 +5,7 @@ import '../service/api_service.dart';
 class PlaceRepository {
   Future<List<City>> getListCity() async {
     List<City> list = [];
+    list.add(City(id: 0, name: '--Chọn--'));
     var data = await ApiService().getListCity();
     if (data != null) {
       for (var item in data) {
@@ -17,6 +18,7 @@ class PlaceRepository {
 
   Future<List<District>> getListDistrict(int id) async {
     List<District> list = [];
+    list.add(District(id: 0, name: '--Chọn--', level: 0));
     var data = await ApiService().getListDistrict(id);
     if (data != null) {
       for (var item in data) {
@@ -29,6 +31,7 @@ class PlaceRepository {
 
   Future<List<Ward>> getListWard(int id) async {
     List<Ward> list = [];
+    list.add(Ward(id: 0, name: '--Chọn--'));
     var data = await ApiService().getListWard(id);
     if (data != null) {
       for (var item in data) {
