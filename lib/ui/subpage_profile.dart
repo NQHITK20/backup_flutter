@@ -7,10 +7,15 @@ import 'package:provider/provider.dart';
 import 'AppConstant.dart';
 import 'custom_control.dart';
 
-class SubPageProfile extends StatelessWidget {
+class SubPageProfile extends StatefulWidget {
   const SubPageProfile({super.key});
   static int idpage = 1;
 
+  @override
+  State<SubPageProfile> createState() => _SubPageProfileState();
+}
+
+class _SubPageProfileState extends State<SubPageProfile> {
   @override
   Widget build(BuildContext context) {
     final viewmodel = Provider.of<ProfileViewModel>(context);
@@ -20,39 +25,44 @@ class SubPageProfile extends StatelessWidget {
       onTap: () => MainViewModel().closeMenu(),
       child: Container(
         color: Colors.white,
-        child: Column(
+        child: Stack(
           children: [
-            //--start header--//
-            createHeader(size, profile),
-            //end header ...
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Column(
               children: [
-                CustomInputTextFormField(
-                  title: 'Điện thoại',
-                  value: '8712481283',
-                  width: size.width * 0.45,
-                  callback: (output) {
-                    profile.user.phone = output;
-                    viewmodel.updatescreen();
-                  },
-                  type: TextInputType.phone,
-                ),
-                CustomInputTextFormField(
-                  title: 'Ngày sinh',
-                  value: '25/12/2001',
-                  width: size.width * 0.45,
-                  callback: (output) {
-                    if (AppConstant.isDate(output)) {
-                      profile.user.birthday = output;
-                    }
-                    viewmodel.updatescreen();
-                  },
-                  type: TextInputType.datetime,
+                //--start header--//
+                createHeader(size, profile),
+                //end header ...
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomInputTextFormField(
+                      title: 'Điện thoại',
+                      value: profile.user.phone,
+                      width: size.width * 0.45,
+                      callback: (output) {
+                        profile.user.phone = output;
+                        viewmodel.updatescreen();
+                      },
+                      type: TextInputType.phone,
+                    ),
+                    CustomInputTextFormField(
+                      title: 'Ngày sinh',
+                      value: profile.user.birthday,
+                      width: size.width * 0.45,
+                      callback: (output) {
+                        if (AppConstant.isDate(output)) {
+                          profile.user.birthday = output;
+                        }
+                        viewmodel.updatescreen();
+                      },
+                      type: TextInputType.datetime,
+                    ),
+                  ],
                 ),
               ],
             ),
+            viewmodel.status == 1 ? CustomSpinner(size: size) : Container(),
           ],
         ),
       ),
@@ -96,7 +106,7 @@ class SubPageProfile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'User name 1',
+                profile.user.user_name,
                 style: AppConstant.textBodyfocuswhite,
               ),
               Row(
@@ -106,7 +116,7 @@ class SubPageProfile extends StatelessWidget {
                     style: AppConstant.textBodywhite,
                   ),
                   Text(
-                    '2121212',
+                    profile.student.mssv,
                     style: AppConstant.textBodyfocuswhitebold,
                   ),
                 ],
@@ -118,7 +128,7 @@ class SubPageProfile extends StatelessWidget {
                     style: AppConstant.textBodywhite,
                   ),
                   Text(
-                    'cnttk20',
+                    profile.student.tenlop,
                     style: AppConstant.textBodyfocuswhitebold,
                   ),
                   profile.student.duyet == 0

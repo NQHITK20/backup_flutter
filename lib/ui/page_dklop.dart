@@ -63,7 +63,7 @@ class _PageDangkyLopState extends State<PageDangkyLop> {
               CustomInputTextFormField(
                 width: size.width,
                 title: 'Tên',
-                value: ten,
+                value: profile.user.user_name,
                 callback: (output) {
                   ten = output;
                 },
@@ -71,7 +71,7 @@ class _PageDangkyLopState extends State<PageDangkyLop> {
               CustomInputTextFormField(
                 width: size.width,
                 title: 'Mssv',
-                value: mssv,
+                value: profile.student.mssv,
                 callback: (output) {
                   mssv = output;
                 },
@@ -86,15 +86,17 @@ class _PageDangkyLopState extends State<PageDangkyLop> {
                         } else if (snapshot.hasData) {
                           listlop = snapshot.data;
                           return CustomInputDropDown(
-                              width: size.width,
-                              title: 'Lớp',
-                              valueId: idlop,
-                              valueName: tenlop,
-                              callback: (outputId, outputName) => {
-                                    idlop = outputId,
-                                    tenlop = outputName,
-                                  },
-                              list: listlop!);
+                            width: size.width,
+                            title: 'Lớp',
+                            valueId: idlop,
+                            valueName: tenlop,
+                            callback: (outputId, outputName) => {
+                              idlop = outputId,
+                              tenlop = outputName,
+                            },
+                            list: listlop!,
+                            valueoutputBirthday: '',
+                          );
                         } else {
                           return Text('bug cmnr');
                         }
@@ -105,10 +107,12 @@ class _PageDangkyLopState extends State<PageDangkyLop> {
                       valueId: idlop,
                       valueName: tenlop,
                       callback: (outputId, outputName) => {
-                            idlop = outputId,
-                            tenlop = outputName,
-                          },
-                      list: listlop!),
+                        idlop = outputId,
+                        tenlop = outputName,
+                      },
+                      list: listlop!,
+                      valueoutputBirthday: '',
+                    ),
               SizedBox(
                 height: 20,
               ),

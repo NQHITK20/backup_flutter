@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/model/profile.dart';
+import 'package:flutter_application_3/providers/diachiviewmodal.dart';
 import 'package:flutter_application_3/providers/forgotviewmodal.dart';
 import 'package:flutter_application_3/providers/loginviewmodal.dart';
 import 'package:flutter_application_3/providers/mainviewmodel.dart';
@@ -33,7 +34,9 @@ void main() {
       ChangeNotifierProvider<MenuBarViewModel>(
           create: (context) => MenuBarViewModel()),
       ChangeNotifierProvider<ProfileViewModel>(
-          create: (context) => ProfileViewModel())
+          create: (context) => ProfileViewModel()),
+      ChangeNotifierProvider<Diachiviewmodal>(
+          create: (context) => Diachiviewmodal())
     ],
     child: const MyApp(),
   ));

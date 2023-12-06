@@ -35,7 +35,7 @@ class User {
     this.provincename = "",
     this.dicstrictname = "",
     this.wardname = "",
-    this.birthday = "",
+    this.birthday = "25/12/2001",
   });
   factory User.fromJson(Map<String, dynamic> json) {
     return User(

@@ -31,25 +31,25 @@ class Pagemain extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final viewmodal = Provider.of<MainViewModel>(context);
     Profile profile = Profile();
-    // if (profile.token == '') {
-    //   return PageLogin();
-    // }
-    // if (profile.student.mssv == '') {
-    //   return PageDangkyLop();
-    // }
-    Widget body = SubPageTinTuc();
+    if (profile.token == '') {
+      return PageLogin();
+    }
+    if (profile.student.mssv == '') {
+      return PageDangkyLop();
+    }
+    Widget body = SubPageProfile();
     if (viewmodal.activemenu == SubPageProfile.idpage) {
       body = SubPageProfile();
     } else if (viewmodal.activemenu == SubPageTinTuc.idpage) {
-      body = SubPageProfile();
+      body = SubPageTinTuc();
     } else if (viewmodal.activemenu == SubPageTimKiem.idpage) {
-      body = SubPageProfile();
+      body = SubPageTimKiem();
     } else if (viewmodal.activemenu == SubPageDslop.idpage) {
-      body = SubPageProfile();
+      body = SubPageDslop();
     } else if (viewmodal.activemenu == SubPageDshocphan.idpage) {
-      body = SubPageProfile();
+      body = SubPageDshocphan();
     } else if (viewmodal.activemenu == SubPageDiemdanh.idpage) {
-      body = SubPageProfile();
+      body = SubPageDiemdanh();
     }
     menuBar.initialize(menuTitles);
     return Scaffold(

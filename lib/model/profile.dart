@@ -1,12 +1,11 @@
 import 'dart:js_util';
-
 import 'package:flutter_application_3/model/student.dart';
 import 'package:flutter_application_3/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile {
   static final Profile _instance = Profile._internal();
-  Profile._internal({this.token = ""});
+  Profile._internal();
   factory Profile() {
     return _instance;
   }
@@ -28,16 +27,16 @@ class Profile {
   String get password => _pref.getString('password') ?? '';
 }
 
-// class SharedPrefSingleton {
-//   static final SharedPrefSingleton _instance = SharedPrefSingleton._internal();
-//   factory SharedPrefSingleton() => _instance;
-//   SharedPrefSingleton._internal();
+class SharedPrefSingleton {
+  static final SharedPrefSingleton _instance = SharedPrefSingleton._internal();
+  factory SharedPrefSingleton() => _instance;
+  SharedPrefSingleton._internal();
 
-//   late SharedPreferences _pref;
-//   Future<void> initialize() async {
-//     _pref = await SharedPreferences.getInstance();
-//   }
+  late SharedPreferences _pref;
+  Future<void> initialize() async {
+    _pref = await SharedPreferences.getInstance();
+  }
 
-//   Future<bool> setName(String name) => _pref.setString('name_key', name);
-//   String get name => _pref.getString('name_key') ?? '';
-// }
+  Future<bool> setName(String name) => _pref.setString('name_key', name);
+  String get name => _pref.getString('name_key') ?? '';
+}

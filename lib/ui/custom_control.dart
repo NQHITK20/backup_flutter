@@ -1,7 +1,108 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_application_3/model/place.dart';
 import '../model/lop.dart';
 import 'AppConstant.dart';
+
+class CustomPlaceDropDown extends StatefulWidget {
+  CustomPlaceDropDown({
+    super.key,
+    required this.width,
+    required this.title,
+    required this.valueId,
+    required this.valueName,
+    required this.callback,
+    required this.list,
+    required this.valueoutputBirthday,
+  });
+
+  final double width;
+  final String title;
+  final int valueId;
+  final String valueName;
+  final String valueoutputBirthday;
+  final List<Place> list;
+  final Function(int outputId, String outputName) callback;
+
+  @override
+  State<CustomPlaceDropDown> createState() => _CustomPlaceDropDownState();
+}
+
+class _CustomPlaceDropDownState extends State<CustomPlaceDropDown> {
+  int status = 0;
+  int outputId = 0;
+  String outputBirthday = '';
+  String outputName = '';
+  @override
+  void initState() {
+    // TODO: implement initState
+    outputId = widget.valueId;
+    outputName = widget.valueName;
+    outputBirthday = widget.valueoutputBirthday;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.title,
+          style: AppConstant.textBody,
+        ),
+        status == 0
+            ? GestureDetector(
+                onTap: () {
+                  setState(() {
+                    status = 1;
+                  });
+                },
+                child: Text(
+                  widget.valueoutputBirthday == ''
+                      ? 'Không có'
+                      : outputBirthday,
+                  style: AppConstant.textBodyfocus,
+                ),
+              )
+            : Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.grey[200]),
+                width: widget.width - 25,
+                child: DropdownButton(
+                  value: outputId,
+                  items: widget.list
+                      .map((e) => DropdownMenuItem(
+                            value: e.id,
+                            child: Container(
+                                width: widget.width * 0.8,
+                                child: Text(
+                                  e.name,
+                                  overflow: TextOverflow.ellipsis,
+                                )),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      outputId = value!;
+                      for (var dropitem in widget.list) {
+                        if (dropitem.id == outputId) {
+                          outputName = dropitem.name;
+                          widget.callback(outputId, outputName);
+                          break;
+                        }
+                      }
+                      status = 0;
+                    });
+                  },
+                )),
+        Divider(
+          thickness: 1,
+        )
+      ],
+    );
+  }
+}
 
 class contain1 extends StatelessWidget {
   const contain1({
@@ -122,12 +223,14 @@ class CustomInputDropDown extends StatefulWidget {
     required this.valueName,
     required this.callback,
     required this.list,
+    required this.valueoutputBirthday,
   });
 
   final double width;
   final String title;
   final int valueId;
   final String valueName;
+  final String valueoutputBirthday;
   final List<Lop> list;
   final Function(int outputId, String outputName) callback;
 
@@ -138,12 +241,14 @@ class CustomInputDropDown extends StatefulWidget {
 class _CustomInputDropDownState extends State<CustomInputDropDown> {
   int status = 0;
   int outputId = 0;
+  String outputBirthday = '';
   String outputName = '';
   @override
   void initState() {
     // TODO: implement initState
     outputId = widget.valueId;
     outputName = widget.valueName;
+    outputBirthday = widget.valueoutputBirthday;
   }
 
   @override
@@ -163,7 +268,9 @@ class _CustomInputDropDownState extends State<CustomInputDropDown> {
                   });
                 },
                 child: Text(
-                  outputName == '' ? 'Không có' : outputName,
+                  widget.valueoutputBirthday == ''
+                      ? 'Không có'
+                      : outputBirthday,
                   style: AppConstant.textBodyfocus,
                 ),
               )

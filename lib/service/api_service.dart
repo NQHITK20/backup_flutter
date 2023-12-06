@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_application_3/model/profile.dart';
+import 'package:http/http.dart' as http;
 
 class ApiService {
   static final ApiService _instance = ApiService._internal();
@@ -17,15 +18,76 @@ class ApiService {
     _dio = Dio(BaseOptions(responseType: ResponseType.json));
   }
 
+  Future<List<dynamic>?> getListCity() async {
+    Profile profile = Profile();
+    String api_url = 'https://chocaycanh.club/api/getjstinh';
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ' + Profile().token,
+      'Accept': 'application/json',
+    };
+    var client = http.Client();
+    try {
+      var res = await client.get(Uri.parse(api_url), headers: headers);
+      if (res.statusCode == 200) {
+        var data = jsonDecode(res.body);
+        return data;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<List<dynamic>?> getListDistrict(int id) async {
+    Profile profile = Profile();
+    String api_url =
+        'https://chocaycanh.club/api/getjshuyen?id=' + id.toString();
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ' + Profile().token,
+      'Accept': 'application/json',
+    };
+    var client = http.Client();
+    try {
+      var res = await client.get(Uri.parse(api_url), headers: headers);
+      if (res.statusCode == 200) {
+        var data = jsonDecode(res.body);
+        return data;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<List<dynamic>?> getListWard(int id) async {
+    Profile profile = Profile();
+    String api_url = 'https://chocaycanh.club/api/getjsxa?id=' + id.toString();
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ' + Profile().token,
+      'Accept': 'application/json',
+    };
+    var client = http.Client();
+    try {
+      var res = await client.get(Uri.parse(api_url), headers: headers);
+      if (res.statusCode == 200) {
+        var data = jsonDecode(res.body);
+        return data;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Response?> dangkylop() async {
     Profile profile = Profile();
     Map<String, String> headers = {
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Authorization': 'Bearer' + Profile().token,
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ' + Profile().token,
       'Accept': 'application/json',
     };
     Map<String, dynamic> param = {
-      'first_name': profile.student.idlop,
+      'id': profile.student.idlop,
       'mssv': profile.student.mssv
     };
     String apiUrl = 'https://chocaycanh.club/api/lophoc/dangky';
@@ -44,8 +106,8 @@ class ApiService {
   Future<Response?> updateProfile() async {
     Profile profile = Profile();
     Map<String, String> headers = {
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Authorization': 'Bearer' + Profile().token,
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ' + Profile().token,
       'Accept': 'application/json',
     };
     String birthday = '';
@@ -85,8 +147,8 @@ class ApiService {
 
   Future<Response?> getDsLop() async {
     Map<String, String> headers = {
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Authorization': 'Bearer' + Profile().token,
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ' + Profile().token,
       'Accept': 'application/json',
     };
     String apiUrl = 'https://chocaycanh.club/api/lophoc/ds';
@@ -104,8 +166,8 @@ class ApiService {
 
   Future<Response?> getUserInfo() async {
     Map<String, String> headers = {
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Authorization': 'Bearer' + Profile().token,
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ' + Profile().token,
       'Accept': 'application/json',
     };
     String apiUrl = 'https://chocaycanh.club/public/api/me';
@@ -123,8 +185,8 @@ class ApiService {
 
   Future<Response?> getStInfo() async {
     Map<String, String> headers = {
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Authorization': 'Bearer' + Profile().token,
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ' + Profile().token,
       'Accept': 'application/json',
     };
     String apiUrl = 'https://chocaycanh.club/api/sinhvien/info';
@@ -147,7 +209,7 @@ class ApiService {
       'device_name': 'android'
     };
     Map<String, String> headers = {
-      'Content-Type': 'application/json;charset=UTF-8',
+      'Content-Type': 'application/json; charset=UTF-8',
     };
     try {
       final response = await _dio.post(url_login,
@@ -171,7 +233,7 @@ class ApiService {
       'tos': 'true'
     };
     Map<String, String> headers = {
-      'Content-Type': 'application/json;charset=UTF-8',
+      'Content-Type': 'application/json; charset=UTF-8',
     };
     try {
       final response = await _dio.post(url_register,
@@ -192,7 +254,7 @@ class ApiService {
       'email': email,
     };
     Map<String, String> headers = {
-      'Content-Type': 'application/json;charset=UTF-8',
+      'Content-Type': 'application/json; charset=UTF-8',
     };
     try {
       final response = await _dio.post(url_forgot,
