@@ -20,7 +20,6 @@ class MainViewModel with ChangeNotifier {
 
   void closeMenu() {
     menustatus = 0;
-    menustatus = 0;
     notifyListeners();
   }
 

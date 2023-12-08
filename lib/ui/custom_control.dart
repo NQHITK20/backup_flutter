@@ -38,68 +38,72 @@ class _CustomPlaceDropDownState extends State<CustomPlaceDropDown> {
     outputId = widget.valueId;
     outputName = widget.valueName;
     outputBirthday = widget.valueoutputBirthday;
+
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          widget.title,
-          style: AppConstant.textBody,
-        ),
-        status == 0
-            ? GestureDetector(
-                onTap: () {
-                  setState(() {
-                    status = 1;
-                  });
-                },
-                child: Text(
-                  widget.valueoutputBirthday == ''
-                      ? 'Không có'
-                      : outputBirthday,
-                  style: AppConstant.textBodyfocus,
-                ),
-              )
-            : Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.grey[200]),
-                width: widget.width - 25,
-                child: DropdownButton(
-                  value: outputId,
-                  items: widget.list
-                      .map((e) => DropdownMenuItem(
-                            value: e.id,
-                            child: Container(
-                                width: widget.width * 0.8,
-                                child: Text(
-                                  e.name,
-                                  overflow: TextOverflow.ellipsis,
-                                )),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
+    return SizedBox(
+      // color: Colors.red,
+      width: widget.width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.title,
+            style: AppConstant.textBody,
+          ),
+          status == 0
+              ? GestureDetector(
+                  onTap: () {
                     setState(() {
-                      outputId = value!;
-                      for (var dropitem in widget.list) {
-                        if (dropitem.id == outputId) {
-                          outputName = dropitem.name;
-                          widget.callback(outputId, outputName);
-                          break;
-                        }
-                      }
-                      status = 0;
+                      status = 1;
                     });
                   },
-                )),
-        Divider(
-          thickness: 1,
-        )
-      ],
+                  child: Text(
+                    widget.valueName == '' ? 'Không có' : widget.valueName,
+                    style: AppConstant.textBodyfocus,
+                  ),
+                )
+              : Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.grey[200]),
+                  width: widget.width,
+                  child: DropdownButton(
+                    value: widget.valueId,
+                    items: widget.list
+                        .map((e) => DropdownMenuItem(
+                              value: e.id,
+                              child: Container(
+                                  width: widget.width * 0.7,
+                                  child: Text(
+                                    e.name,
+                                    overflow: TextOverflow.ellipsis,
+                                  )),
+                            ))
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        outputId = value!;
+                        for (var dropitem in widget.list) {
+                          if (dropitem.id == outputId) {
+                            outputName = dropitem.name;
+                            widget.callback(outputId, outputName);
+                            break;
+                          }
+                        }
+                        status = 0;
+                      });
+                    },
+                  )),
+          Divider(
+            thickness: 1,
+          )
+        ],
+      ),
     );
   }
 }
@@ -279,14 +283,14 @@ class _CustomInputDropDownState extends State<CustomInputDropDown> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     color: Colors.grey[200]),
-                width: widget.width,
+                width: widget.width - 25,
                 child: DropdownButton(
                   value: outputId,
                   items: widget.list
                       .map((e) => DropdownMenuItem(
                             value: e.id,
                             child: Container(
-                                width: widget.width * 0.6,
+                                width: widget.width * 0.8,
                                 child: Text(
                                   e.ten,
                                   overflow: TextOverflow.ellipsis,

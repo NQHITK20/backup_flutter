@@ -15,7 +15,7 @@ class SubPageProfile extends StatelessWidget {
     Profile profile = Profile();
     if (dcmodel.listCity.isEmpty ||
         dcmodel.curCityId != profile.user.province_id ||
-        dcmodel.curCityId != profile.user.district_id ||
+        dcmodel.curDistId != profile.user.district_id ||
         dcmodel.curWardId != profile.user.ward_id) {
       viewModel.playspiner();
       await dcmodel.initialize(profile.user.province_id,
@@ -40,7 +40,7 @@ class SubPageProfile extends StatelessWidget {
             Column(
               children: [
                 //--start header--//
-                createHeader(size, profile),
+                createHeader(size, profile, viewmodel),
                 //end header ...
 
                 Row(
@@ -53,6 +53,7 @@ class SubPageProfile extends StatelessWidget {
                       callback: (output) {
                         profile.user.phone = output;
                         viewmodel.updatescreen();
+                        viewmodel.setModified();
                       },
                       type: TextInputType.phone,
                     ),
@@ -65,12 +66,14 @@ class SubPageProfile extends StatelessWidget {
                           profile.user.birthday = output;
                         }
                         viewmodel.updatescreen();
+                        viewmodel.setModified();
                       },
                       type: TextInputType.datetime,
                     ),
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomPlaceDropDown(
                         width: size.width * 0.45,
@@ -82,22 +85,84 @@ class SubPageProfile extends StatelessWidget {
                           profile.user.province_id = outputId;
                           profile.user.provincename = outputName;
                           await dcmodel.SetCity(outputId);
+                          profile.user.district_id = 0;
+                          profile.user.ward_id = 0;
+                          profile.user.dicstrictname = '';
+                          profile.user.wardname = '';
+                          viewmodel.setModified();
                           viewmodel.hidespiner();
                         },
                         list: dcmodel.listCity,
-                        valueoutputBirthday: '')
+                        valueoutputBirthday: ''),
+                    CustomPlaceDropDown(
+                        width: size.width * 0.45,
+                        title: 'Quận/huyện',
+                        valueId: profile.user.district_id,
+                        valueName: profile.user.dicstrictname,
+                        callback: (outputId, outputName) async {
+                          viewmodel.playspiner();
+                          profile.user.district_id = outputId;
+                          profile.user.dicstrictname = outputName;
+                          profile.user.ward_id = 0;
+                          profile.user.wardname = '';
+                          await dcmodel.setDistrict(outputId);
+                          viewmodel.setModified();
+                          viewmodel.hidespiner();
+                        },
+                        list: dcmodel.listDistrict,
+                        valueoutputBirthday: ''),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomPlaceDropDown(
+                        width: size.width * 0.45,
+                        title: 'Huyện/xã',
+                        valueId: profile.user.ward_id,
+                        valueName: profile.user.wardname,
+                        callback: (outputId, outputName) async {
+                          viewmodel.playspiner();
+                          profile.user.ward_id = outputId;
+                          profile.user.wardname = outputName;
+                          await dcmodel.setWard(outputId);
+                          viewmodel.setModified();
+                          viewmodel.hidespiner();
+                        },
+                        list: dcmodel.listWard,
+                        valueoutputBirthday: ''),
+                    CustomInputTextFormField(
+                      title: 'Số nhà/tên đường',
+                      value: profile.user.address,
+                      width: size.width * 0.45,
+                      callback: (output) {
+                        profile.user.address = output;
+                        viewmodel.updatescreen();
+                        viewmodel.setModified();
+                      },
+                      type: TextInputType.streetAddress,
+                    ),
                   ],
                 )
               ],
             ),
-            viewmodel.status == 1 ? CustomSpinner(size: size) : Container(),
+            SizedBox(
+              width: size.width * 0.4,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: viewmodel.status == 1
+                    ? CustomSpinner(size: size)
+                    : Container(),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Container createHeader(Size size, Profile profile) {
+  Container createHeader(
+      Size size, Profile profile, ProfileViewModel viewModel) {
     return Container(
       height: size.height * 0.25,
       width: double.infinity,
@@ -183,7 +248,8 @@ class SubPageProfile extends StatelessWidget {
                           style: AppConstant.textBodyfocuswhitebold,
                         ),
                 ],
-              )
+              ),
+              viewModel.modified == 1 ? Icon(Icons.save) : Container()
             ],
           )
         ],

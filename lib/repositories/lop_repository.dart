@@ -4,7 +4,7 @@ import 'package:flutter_application_3/service/api_service.dart';
 class LopRepository {
   Future<List<Lop>> getDsLop() async {
     List<Lop> list = [];
-    list.add(Lop(ten: 'cnttk20'));
+    list.add(Lop(ten: '--Chọn--'));
     final res = await ApiService().getDsLop();
     if (res != null) {
       var data = res.data['data'];
