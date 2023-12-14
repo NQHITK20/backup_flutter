@@ -31,12 +31,12 @@ class Pagemain extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final viewmodal = Provider.of<MainViewModel>(context);
     Profile profile = Profile();
-    if (profile.token == '') {
-      return PageLogin();
-    }
-    if (profile.student.mssv == '') {
-      return PageDangkyLop();
-    }
+    // if (profile.token == '') {
+    //   return PageLogin();
+    // }
+    // if (profile.student.mssv == '') {
+    //   return PageDangkyLop();
+    // }
     Widget body = SubPageProfile();
     if (viewmodal.activemenu == SubPageProfile.idpage) {
       body = SubPageProfile();
@@ -80,7 +80,7 @@ class Pagemain extends StatelessWidget {
                     builder: (context, menuBarModel, child) {
                       return GestureDetector(
                           onPanUpdate: (details) {
-                            menuBarModel.setOffset(details.localPosition);
+                            menuBarModel.setOffset(details.globalPosition);
                           },
                           onPanEnd: (details) {
                             menuBarModel.setOffset(Offset(0, 0));
@@ -90,7 +90,7 @@ class Pagemain extends StatelessWidget {
                             children: [
                               CustomMenuBar(size: size),
                               Padding(
-                                padding: EdgeInsets.only(left: 10.0),
+                                padding: EdgeInsets.only(left: 2.0),
                                 child: menuBar,
                               )
                             ],
@@ -128,25 +128,23 @@ class MenuItemList extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(size.height),
           child: SizedBox(
-            height: size.height * 0.20,
+            height: size.height * 0.25,
             width: size.height * 0.65,
-            child: Center(
-              child: AvatarGlow(
-                duration: Duration(milliseconds: 2000),
-                repeat: true,
-                showTwoGlows: true,
-                repeatPauseDuration: Duration(microseconds: 100),
-                endRadius: size.height * 0.3,
-                glowColor: AppConstant.backgroundcolor,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(size.height),
-                  child: SizedBox(
-                    height: size.height * 0.16,
-                    width: size.height * 0.16,
-                    child: Image(
-                      image: AssetImage('cute1.gif'),
-                      fit: BoxFit.cover,
-                    ),
+            child: AvatarGlow(
+              duration: Duration(milliseconds: 2000),
+              repeat: true,
+              showTwoGlows: true,
+              repeatPauseDuration: Duration(microseconds: 100),
+              endRadius: size.height * 0.4,
+              glowColor: AppConstant.backgroundcolor,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(size.height),
+                child: SizedBox(
+                  height: size.height * 0.16,
+                  width: size.height * 0.16,
+                  child: Image(
+                    image: AssetImage('cute1.gif'),
+                    fit: BoxFit.fitHeight,
                   ),
                 ),
               ),
@@ -155,17 +153,17 @@ class MenuItemList extends StatelessWidget {
         ),
         Container(
           height: 2,
-          width: size.width * 0.55,
+          width: size.width * 0.45,
           color: Colors.deepPurple[300],
         ),
         SizedBox(
           height: 15,
         ),
         SizedBox(
-          height: size.width * 0.6,
-          width: size.width * 0.65,
+          height: size.width,
+          width: size.width,
           child: Padding(
-            padding: const EdgeInsets.only(left: 20.0),
+            padding: const EdgeInsets.only(left: 10.0),
             child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: MenuBarItems.length,
@@ -216,7 +214,7 @@ class MenuBarItem extends StatelessWidget {
       child: Container(
         key: containerkey,
         alignment: Alignment.centerLeft,
-        height: 40,
+        height: 30,
         child: Text(
           title,
           style: style,

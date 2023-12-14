@@ -1,4 +1,3 @@
-import 'package:flutter_application_3/model/profile.dart';
 import 'package:flutter_application_3/model/student.dart';
 import 'package:flutter_application_3/service/api_service.dart';
 

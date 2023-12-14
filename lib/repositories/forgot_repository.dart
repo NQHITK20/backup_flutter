@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_application_3/service/api_service.dart';
 
 class ForgotRepository {

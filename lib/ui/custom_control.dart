@@ -167,7 +167,8 @@ class Applogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(Icons.audiotrack, size: 100, color: Colors.deepPurple[300]);
+    return Icon(Icons.headphones_battery_outlined,
+        size: 100, color: Colors.lightBlue[300]);
   }
 }
 

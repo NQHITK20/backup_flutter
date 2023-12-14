@@ -1,26 +1,30 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/model/profile.dart';
 import 'package:flutter_application_3/providers/diachiviewmodal.dart';
 import 'package:flutter_application_3/providers/mainviewmodel.dart';
 import 'package:flutter_application_3/providers/profileviewmodal.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'AppConstant.dart';
 import 'custom_control.dart';
 
 class SubPageProfile extends StatelessWidget {
-  const SubPageProfile({super.key});
+  SubPageProfile({super.key});
   static int idpage = 1;
-
-  Future<void> init(Diachiviewmodal dcmodel, ProfileViewModel viewModel) async {
+  XFile? image;
+  Future<void> init(Diachiviewmodal dcmodel, ProfileViewModel viewmodel) async {
     Profile profile = Profile();
     if (dcmodel.listCity.isEmpty ||
         dcmodel.curCityId != profile.user.province_id ||
         dcmodel.curDistId != profile.user.district_id ||
         dcmodel.curWardId != profile.user.ward_id) {
-      viewModel.playspiner();
+      viewmodel.playspiner();
       await dcmodel.initialize(profile.user.province_id,
           profile.user.district_id, profile.user.ward_id);
-      viewModel.hidespiner();
+      viewmodel.hidespiner();
     }
   }
 
@@ -42,7 +46,6 @@ class SubPageProfile extends StatelessWidget {
                 //--start header--//
                 createHeader(size, profile, viewmodel),
                 //end header ...
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -143,15 +146,29 @@ class SubPageProfile extends StatelessWidget {
                       type: TextInputType.streetAddress,
                     ),
                   ],
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                SizedBox(
+                  height: size.width * 0.2,
+                  width: size.width * 0.2,
+                  child: QrImageView(
+                    data: '{userid:' + profile.user.id.toString() + '}',
+                    version: QrVersions.auto,
+                    gapless: false,
+                  ),
                 )
               ],
             ),
             SizedBox(
-              width: size.width * 0.4,
+              width: size.width,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: viewmodel.status == 1
-                    ? CustomSpinner(size: size)
+                    ? CustomSpinner(
+                        size: size,
+                      )
                     : Container(),
               ),
             ),
@@ -162,7 +179,7 @@ class SubPageProfile extends StatelessWidget {
   }
 
   Container createHeader(
-      Size size, Profile profile, ProfileViewModel viewModel) {
+      Size size, Profile profile, ProfileViewModel viewmodel) {
     return Container(
       height: size.height * 0.25,
       width: double.infinity,
@@ -191,7 +208,43 @@ class SubPageProfile extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: CustomAvatar1(size: size),
+                child: viewmodel.updateavatar == 1 && image != null
+                    ? Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: Image.file(
+                                File(image!.path),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 100,
+                            height: 100,
+                            alignment: Alignment.center,
+                            child: GestureDetector(
+                              onTap: () {
+                                viewmodel.uploadAvatar(image!);
+                              },
+                              child: Container(
+                                  color: Colors.white,
+                                  child: Icon(size: 30, Icons.save)),
+                            ),
+                          )
+                        ],
+                      )
+                    : GestureDetector(
+                        onTap: () async {
+                          final ImagePicker _picker = ImagePicker();
+                          image = await _picker.pickImage(
+                              source: ImageSource.gallery);
+                          viewmodel.setUpdateAvatar();
+                        },
+                        child: CustomAvatar1(size: size)),
               ),
             ],
           ),
@@ -249,7 +302,18 @@ class SubPageProfile extends StatelessWidget {
                         ),
                 ],
               ),
-              viewModel.modified == 1 ? Icon(Icons.save) : Container()
+              SizedBox(
+                  width: size.width * 0.4,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: viewmodel.modified == 1
+                        ? GestureDetector(
+                            onTap: () {
+                              viewmodel.updateProfile();
+                            },
+                            child: Icon(Icons.save))
+                        : Container(),
+                  ))
             ],
           )
         ],

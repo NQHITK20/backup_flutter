@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/model/student.dart';
 import 'package:flutter_application_3/repositories/lop_repository.dart';
 import 'package:flutter_application_3/repositories/student_repository.dart';
 import 'package:flutter_application_3/repositories/user_repository.dart';
@@ -98,7 +97,7 @@ class _PageDangkyLopState extends State<PageDangkyLop> {
                             valueoutputBirthday: '',
                           );
                         } else {
-                          return Text('bug cmnr');
+                          return Text('ko load đc data');
                         }
                       })
                   : CustomInputDropDown(
