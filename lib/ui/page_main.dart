@@ -31,12 +31,12 @@ class Pagemain extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final viewmodal = Provider.of<MainViewModel>(context);
     Profile profile = Profile();
-    // if (profile.token == '') {
-    //   return PageLogin();
-    // }
-    // if (profile.student.mssv == '') {
-    //   return PageDangkyLop();
-    // }
+    if (profile.token == '') {
+      return PageLogin();
+    }
+    if (profile.student.mssv == '') {
+      return PageDangkylop();
+    }
     Widget body = SubPageProfile();
     if (viewmodal.activemenu == SubPageProfile.idpage) {
       body = SubPageProfile();
@@ -124,31 +124,38 @@ class MenuItemList extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(size.height),
-          child: SizedBox(
-            height: size.height * 0.25,
-            width: size.height * 0.65,
-            child: AvatarGlow(
-              duration: Duration(milliseconds: 2000),
-              repeat: true,
-              showTwoGlows: true,
-              repeatPauseDuration: Duration(microseconds: 100),
-              endRadius: size.height * 0.4,
-              glowColor: AppConstant.backgroundcolor,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(size.height),
-                child: SizedBox(
-                  height: size.height * 0.16,
-                  width: size.height * 0.16,
-                  child: Image(
-                    image: AssetImage('cute1.gif'),
-                    fit: BoxFit.fitHeight,
+          child: Row(
+            children: [
+              SizedBox(
+                height: size.height * 0.25,
+                width: size.height * 0.65,
+                child: Center(
+                  child: AvatarGlow(
+                    duration: Duration(milliseconds: 2000),
+                    repeat: true,
+                    showTwoGlows: true,
+                    repeatPauseDuration: Duration(microseconds: 100),
+                    endRadius: size.height * 0.4,
+                    glowColor: AppConstant.backgroundcolor,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(size.height),
+                      child: SizedBox(
+                        height: size.height * 0.16,
+                        width: size.height * 0.16,
+                        child: Image(
+                          image: AssetImage('cute1.gif'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
         Container(

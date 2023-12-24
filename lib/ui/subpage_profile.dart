@@ -178,7 +178,7 @@ class SubPageProfile extends StatelessWidget {
     );
   }
 
-  Container createHeader(
+ Container createHeader(
       Size size, Profile profile, ProfileViewModel viewmodel) {
     return Container(
       height: size.height * 0.25,
@@ -321,3 +321,4 @@ class SubPageProfile extends StatelessWidget {
     );
   }
 }
+
